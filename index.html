@@ -35,13 +35,13 @@
             flex-wrap: wrap;
         }
         
-        .logo-container { text-align: center; text-decoration: none; color: var(--navy); min-width: 200px; }
+        .logo-container { text-align: center; text-decoration: none; color: var(--navy); min-width: 200px; cursor: pointer; }
         .logo-main { font-family: var(--title-font); font-weight: 700; letter-spacing: 7px; font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; line-height: 1; }
         .logo-line { width: 100%; height: 2px; background-color: var(--navy); margin: 6px 0; }
         .logo-text { font-family: var(--title-font); font-size: 0.6rem; letter-spacing: 3px; text-transform: lowercase; margin: 0; }
         
         nav { display: flex; align-items: center; flex-wrap: wrap; gap: 15px; }
-        nav a { font-family: var(--title-font); color: var(--navy); text-decoration: none; font-size: 0.65rem; text-transform: uppercase; margin-left: 20px; letter-spacing: 1.5px; }
+        nav a { font-family: var(--title-font); color: var(--navy); text-decoration: none; font-size: 0.65rem; text-transform: uppercase; margin-left: 20px; letter-spacing: 1.5px; cursor: pointer;}
         nav a.btn-contact { border: 1.5px solid var(--navy); padding: 8px 20px; transition: 0.3s; margin-left: 0; }
         nav a.btn-contact:hover { background-color: var(--navy); color: white; }
 
@@ -82,13 +82,13 @@
 <body>
     <div class="container">
         <header class="header-nav">
-            <a href="#" class="logo-container">
+            <a href="#" onclick="closeProject(); return false;" class="logo-container">
                 <h1 class="logo-main">THOLOS</h1>
                 <div class="logo-line"></div>
                 <p class="logo-text">desarrollos inmobiliarios</p>
             </a>
             <nav>
-                <a href="#portfolio-slider-section">Portafolio</a>
+                <a onclick="closeProject(); return false;">Portafolio</a>
                 <a href="mailto:info@tholos.com.ar" class="btn-contact">Contacto</a>
             </nav>
         </header>
@@ -112,8 +112,7 @@
                      </p>
                 </div>
             </section>
-
-        <section id="project-detail-view">
+        </main> <section id="project-detail-view">
             <button onclick="closeProject()" style="background:none; border:none; cursor:pointer; color:#888; font-size:0.7rem; margin-bottom:20px;">← VOLVER</button>
             <div class="detail-layout">
                 <div>
@@ -133,8 +132,14 @@
             'one_condo': {
                 title: 'One Condo Houses',
                 subtitle: 'Complejo cerrado de Townhouses. Schubert 3962. Partido de Pilar.',
-                specs: { 'Unidades': '12 viviendas independientes de 120 m²', 'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, porcelanatos símil madera, mesadas silestone y griferías monocomando', 'Equipamiento': 'Caldera, losa radiante', 
-                'Superficie': 'Parcela de 2575 m² y 1340 m² cubiertos', 'Plazo': '22 meses', 'Estado': 'TERMINADO' },
+                specs: { 
+                    'Unidades': '12 viviendas independientes de 120 m²', 
+                    'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, porcelanatos símil madera, mesadas silestone y griferías monocomando', 
+                    'Equipamiento': 'Caldera, losa radiante', 
+                    'Superficie': 'Parcela de 2575 m² y 1340 m² cubiertos', 
+                    'Plazo': '22 meses', 
+                    'Estado': 'TERMINADO' 
+                },
                 images: [
                     'images/Fotos pagina web/OCH/1.png',
                     'images/Fotos pagina web/OCH/2.png',
@@ -152,27 +157,34 @@
                     'images/Fotos pagina web/OCH/13.png',
                     'images/Fotos pagina web/OCH/14.png',
                     'images/Fotos pagina web/OCH/15.png',
-                    'images/Fotos pagina web/OCH/16.png',
-        ]
+                    'images/Fotos pagina web/OCH/16.png'
+                ]
             },
             'olazabal': {
                 title: 'Proyecto Olazabal',
                 subtitle: 'Complejo de duplex. Olazabal 1492. Partido de Ituzaingó.',
-                specs: { 'Unidades': '6 unidades independientes de 112 M²', 'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, mesadas silestone, y porcelanatos símil madera', 
-                'Equipamiento': 'Caldera, tanques de agua y bombas presurizadoras independientes', 'Superficie': 'Parcela 625 m² y 670 m² cubiertos', 
-                'Plazo': '12 meses', 'Estado': 'ENTREGADO' },
-                images: ['images/olazabal1.jpg']
+                specs: { 
+                    'Unidades': '6 unidades independientes de 112 M²', 
+                    'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, mesadas silestone, y porcelanatos símil madera', 
+                    'Equipamiento': 'Caldera, tanques de agua y bombas presurizadoras independientes', 
+                    'Superficie': 'Parcela 625 m² y 670 m² cubiertos', 
+                    'Plazo': '12 meses', 
+                    'Estado': 'ENTREGADO' 
+                },
+                images: ['images/Fotos pagina web/Olazabal/Portada Olazabal.jpeg']
             },
             'roots': {
                 title: 'Roots',
                 subtitle: 'Condominio de departamentos y duplex. Gral Jose Rondeau 303. Proximo a estación de Ituzaingó.',
-                specs: { 'Unidades': '8 departamentos de 55 M² y 2 duplex de 70 M²', 
-                'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, cielo raso en durlock, y porcelanatos símil madera', 
-                'Equipamiento': 'N/A', 
-                'Superficie': 'Parcela de 650 m² y 550 m² cubiertos', 
-                'Plazo': '11 meses', 
-                'Estado': 'ENTREGADO' },
-                images: ['images/roots1.jpg']
+                specs: { 
+                    'Unidades': '8 departamentos de 55 M² y 2 duplex de 70 M²', 
+                    'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, cielo raso en durlock, y porcelanatos símil madera', 
+                    'Equipamiento': 'N/A', 
+                    'Superficie': 'Parcela de 650 m² y 550 m² cubiertos', 
+                    'Plazo': '11 meses', 
+                    'Estado': 'ENTREGADO' 
+                },
+                images: ['images/Fotos pagina web/Roots/Roots portada.jpeg']
             }
         };
 
@@ -181,7 +193,7 @@
             const p = projectData[id];
             slider.innerHTML += `
                 <div class="slider-item" onclick="openProject('${id}')">
-                    <div class="img-box"><img src="${p.images[0]}"></div>
+                    <div class="img-box"><img src="${p.images[0]}" onerror="this.src='https://via.placeholder.com/600x400?text=Cargando+Imagen'"></div>
                     <h3 style="font-family:var(--title-font); font-size:0.75rem;">${p.title}</h3>
                 </div>`;
         });
@@ -200,11 +212,17 @@
             const det = document.getElementById('project-detail-view');
             det.style.display = 'block';
             setTimeout(() => det.style.opacity = '1', 50);
+            window.scrollTo(0,0);
         }
 
         function closeProject() {
-            document.getElementById('project-detail-view').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
+            const det = document.getElementById('project-detail-view');
+            det.style.opacity = '0';
+            setTimeout(() => {
+                det.style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                window.scrollTo(0,0);
+            }, 300);
         }
     </script>
 </body>

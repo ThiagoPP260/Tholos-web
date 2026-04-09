@@ -50,18 +50,31 @@
         .hero h1 { font-family: var(--title-font); font-size: clamp(1.8rem, 8vw, 2.8rem); line-height: 1.1; margin: 20px 0; font-weight: 600; }
         .hero p { max-width: 580px; font-size: 1rem; color: var(--text-dim); font-weight: 300; }
 
-        /* --- SLIDER --- */
+        /* --- SLIDER PORTAFOLIO --- */
         .slider-wrapper { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; scrollbar-width: none; }
         .slider-wrapper::-webkit-scrollbar { display: none; }
         .slider-item { flex: 0 0 80%; max-width: 600px; scroll-snap-align: start; cursor: pointer; transition: 0.3s; }
         .img-box { width: 100%; aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 12px; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- DETALLE --- */
+        /* --- VISTA DETALLE Y GALERIA --- */
         #project-detail-view { display: none; opacity: 0; transition: opacity 0.4s; padding: 20px 0 60px; }
         .detail-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
-        .gallery-main { width: 100%; aspect-ratio: 16/10; max-height: 60vh; border: 1px solid var(--border-color); overflow: hidden; position: relative; }
+        
+        .gallery-container { width: 100%; }
+        .gallery-main { width: 100%; aspect-ratio: 16/10; max-height: 60vh; background-color: #eee; border: 1px solid var(--border-color); overflow: hidden; position: relative; cursor: pointer; }
         .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Flechas de la foto principal */
+        .gallery-nav { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+        .gallery-nav-btn { pointer-events: auto; border: none; background: rgba(0, 0, 0, 0.3); color: white; width: 40px; height: 60px; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .gallery-nav-btn:hover { background: rgba(0, 0, 0, 0.6); }
+
+        /* Miniaturas */
+        .gallery-thumbnails { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; margin-top: 15px; padding-bottom: 5px; }
+        .thumbnail { width: clamp(60px, 15vw, 80px); aspect-ratio: 16/10; border: 1px solid var(--border-color); cursor: pointer; opacity: 0.5; flex-shrink: 0; transition: 0.3s; }
+        .thumbnail.active { opacity: 1; border-color: var(--navy); }
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
         
         .specs-list { border-top: 1px solid var(--border-color); margin-top: 20px; }
         .spec-item { border-bottom: 1px solid var(--border-color); padding: 15px 0; display: grid; grid-template-columns: 160px 1fr; gap: 20px; }
@@ -73,7 +86,16 @@
         .stat-item { border-bottom: 1px solid var(--border-color); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
         .stat-number { font-size: 2.2rem; font-family: var(--title-font); font-weight: 700; }
 
+        /* --- LIGHTBOX (PANTALLA COMPLETA) --- */
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .lightbox.open { display: flex; }
+        .lightbox-content { max-width: 95%; max-height: 95%; object-fit: contain; border: 2px solid white; }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 1001; }
+
+        /* --- CORRECCIONES MOBILE --- */
         @media (max-width: 850px) {
+            .header-nav { flex-direction: column; gap: 15px; justify-content: center; }
+            nav { justify-content: center; width: 100%; gap: 20px; }
             .detail-layout, .stats-section { grid-template-columns: 1fr; }
             .spec-item { grid-template-columns: 1fr; gap: 5px; }
         }
@@ -112,11 +134,20 @@
                      </p>
                 </div>
             </section>
-        </main> <section id="project-detail-view">
-            <button onclick="closeProject()" style="background:none; border:none; cursor:pointer; color:#888; font-size:0.7rem; margin-bottom:20px;">← VOLVER</button>
+        </main>
+
+        <section id="project-detail-view">
+            <button onclick="closeProject()" style="background:none; border:none; cursor:pointer; color:#888; font-size:0.7rem; margin-bottom:20px; padding:0; font-family: var(--title-font);">← VOLVER</button>
             <div class="detail-layout">
-                <div>
-                    <div class="gallery-main"><img id="det-img" src=""></div>
+                <div class="gallery-container">
+                    <div class="gallery-main" onclick="openLightbox()">
+                        <img id="det-img" src="">
+                        <div class="gallery-nav" id="gallery-nav">
+                            <button class="gallery-nav-btn" onclick="prevImage(event)">❮</button>
+                            <button class="gallery-nav-btn" onclick="nextImage(event)">❯</button>
+                        </div>
+                    </div>
+                    <div class="gallery-thumbnails" id="thumb-bar"></div> 
                 </div>
                 <div>
                     <h2 id="det-title" style="font-family:var(--title-font); margin:0;"></h2>
@@ -127,7 +158,13 @@
         </section>
     </div>
 
+    <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
     <script>
+
         const projectData = {
             'one_condo': {
                 title: 'One Condo Houses',
@@ -140,6 +177,7 @@
                     'Plazo': '22 meses', 
                     'Estado': 'TERMINADO' 
                 },
+
                 images: [
                     'images/Fotos pagina web/OCH/1.png',
                     'images/Fotos pagina web/OCH/2.png',
@@ -159,8 +197,11 @@
                     'images/Fotos pagina web/OCH/15.png',
                     'images/Fotos pagina web/OCH/16.png'
                 ]
+
             },
+
             'olazabal': {
+
                 title: 'Proyecto Olazabal',
                 subtitle: 'Complejo de duplex. Olazabal 1492. Partido de Ituzaingó.',
                 specs: { 
@@ -171,8 +212,22 @@
                     'Plazo': '12 meses', 
                     'Estado': 'ENTREGADO' 
                 },
-                images: ['images/Fotos pagina web/Olazabal/Portada Olazabal.jpeg']
+
+                images: ['images/Fotos pagina web/Olazabal/Olazabal 1.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 2.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 3.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 4.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 5.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 6.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 7.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 8.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 9.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 10.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 11.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 12.jpeg'
+                ]
             },
+
             'roots': {
                 title: 'Roots',
                 subtitle: 'Condominio de departamentos y duplex. Gral Jose Rondeau 303. Proximo a estación de Ituzaingó.',
@@ -188,6 +243,10 @@
             }
         };
 
+        let currentImages = [];
+        let currentIndex = 0;
+
+        // INICIALIZAR EL CARRUSEL PRINCIPAL
         const slider = document.getElementById('slider');
         Object.keys(projectData).forEach(id => {
             const p = projectData[id];
@@ -200,14 +259,21 @@
 
         function openProject(id) {
             const p = projectData[id];
+            
+            currentImages = p.images;
+            currentIndex = 0;
+
             document.getElementById('det-title').innerText = p.title;
             document.getElementById('det-sub').innerText = p.subtitle;
-            document.getElementById('det-img').src = p.images[0];
+            
             const specs = document.getElementById('det-specs');
             specs.innerHTML = '';
             for (let s in p.specs) {
                 specs.innerHTML += `<div class="spec-item"><span class="spec-label">${s}</span><span class="spec-val">${p.specs[s]}</span></div>`;
             }
+
+            updateGallery();
+
             document.getElementById('main-content').style.display = 'none';
             const det = document.getElementById('project-detail-view');
             det.style.display = 'block';
@@ -215,6 +281,69 @@
             window.scrollTo(0,0);
         }
 
+        // FUNCIÓN QUE ARMA LAS MINIATURAS Y ACTUALIZA LA FOTO
+        function updateGallery() {
+            document.getElementById('det-img').src = currentImages[currentIndex];
+            const bar = document.getElementById('thumb-bar');
+            const nav = document.getElementById('gallery-nav');
+            bar.innerHTML = '';
+
+            // Ocultar flechas y miniaturas si el proyecto solo tiene 1 foto
+            if (currentImages.length <= 1) {
+                bar.style.display = 'none';
+                nav.style.display = 'none';
+                return;
+            }
+
+            // Si hay más de 1 foto, mostrar flechas y miniaturas
+            bar.style.display = 'flex';
+            nav.style.display = 'flex';
+
+            currentImages.forEach((src, i) => {
+                const t = document.createElement('div');
+                t.className = 'thumbnail' + (i === currentIndex ? ' active' : '');
+                t.innerHTML = `<img src="${src}" onerror="this.src='https://via.placeholder.com/150?text=Error'">`;
+                t.onclick = (e) => { 
+                    e.stopPropagation(); // Evita que se abra el lightbox al clickear la miniatura
+                    currentIndex = i; 
+                    updateGallery(); 
+                };
+                bar.appendChild(t);
+            });
+        }
+
+        // FUNCIONES DE LAS FLECHAS
+        function nextImage(e) {
+            if(e) e.stopPropagation();
+            if(currentImages.length > 0) {
+                currentIndex = (currentIndex + 1) % currentImages.length;
+                updateGallery();
+            }
+        }
+
+        function prevImage(e) {
+            if(e) e.stopPropagation();
+            if(currentImages.length > 0) {
+                currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                updateGallery();
+            }
+        }
+
+        // FUNCIONES DEL LIGHTBOX (PANTALLA COMPLETA)
+        function openLightbox() {
+            document.getElementById('lightbox-img').src = currentImages[currentIndex];
+            document.getElementById('lightbox').classList.add('open');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+        }
+
+        function closeLightboxOutside(e) {
+            if(e.target.id === 'lightbox') closeLightbox();
+        }
+
+        // CERRAR EL PROYECTO Y VOLVER AL INICIO
         function closeProject() {
             const det = document.getElementById('project-detail-view');
             det.style.opacity = '0';

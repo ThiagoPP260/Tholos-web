@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&family=Lexend+Exa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f9f9f7; 
+            --navy: #303F61; 
+            --text-dim: #555555;
+            --border-color: #d1d1cf; 
+            --title-font: 'Lexend Exa', sans-serif; 
+            --body-font: 'Lexend Deca', sans-serif;
+            --accent-dim: #888;
+        }
+
+        /* Asegura que el padding no expanda el ancho total de los elementos */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--bg-color); 
+            color: var(--navy); 
+            font-family: var(--body-font); 
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container { 
+            width: 95%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0;
+        }
+
+        /* --- HEADER --- */
+        .header-nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 25px 0 20px 0; 
+            border-bottom: 1px solid var(--border-color); 
+            flex-wrap: wrap;
+        }
+        
+        .logo-container { text-align: center; text-decoration: none; color: var(--navy); min-width: 200px; }
+        .logo-main { font-family: var(--title-font); font-weight: 700; letter-spacing: 7px; font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; line-height: 1; }
+        .logo-line { width: 100%; height: 2px; background-color: var(--navy); margin: 6px 0; }
+        .logo-text { font-family: var(--title-font); font-size: 0.6rem; letter-spacing: 3px; text-transform: lowercase; margin: 0; font-weight: 400; }
+        
+        nav { display: flex; align-items: center; flex-wrap: wrap; gap: 15px; }
+        nav a { font-family: var(--title-font); color: var(--navy); text-decoration: none; font-size: 0.65rem; text-transform: uppercase; margin-left: 20px; letter-spacing: 1.5px; }
+        nav a.btn-contact { border: 1.5px solid var(--navy); padding: 8px 20px; transition: 0.3s; margin-left: 0; }
+        nav a.btn-contact:hover { background-color: var(--navy); color: white; }
+
+        /* --- HERO --- */
+        .hero { padding: 60px 0 40px 0; }
+        .hero span.label { font-family: var(--title-font); text-transform: uppercase; font-size: 0.6rem; letter-spacing: 3px; color: #888; margin-bottom: 15px; display: block; }
+        .hero h1 { font-family: var(--title-font); font-size: clamp(1.8rem, 8vw, 2.8rem); line-height: 1.1; margin: 0 0 20px 0; letter-spacing: -1px; font-weight: 600; }
+        .hero h1 em { font-style: normal; color: #888; }
+        .hero p { max-width: 100%; width: 580px; font-size: 1rem; color: var(--text-dim); font-weight: 300; margin: 0; }
+
+        /* --- CARRUSEL DE PORTAFOLIO --- */
+        #portfolio-slider-section { position: relative; width: 100%; padding-bottom: 40px; }
+        .filters { display: flex; gap: 30px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; flex-wrap: wrap; }
+        .filter-item { font-family: var(--title-font); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-dim); }
+
+        .slider-wrapper { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: none; scroll-behavior: smooth; }
+        .slider-wrapper::-webkit-scrollbar { display: none; }
+
+        .slider-item { flex: 0 0 80%; scroll-snap-align: start; cursor: pointer; max-width: 600px; position: relative; transition: transform 0.3s ease; }
+        .slider-item:hover { transform: translateY(-5px); }
+
+        .img-box { 
+            width: 100%; aspect-ratio: 16/10; background-color: #e2e2df; border: 1px solid var(--border-color); 
+            margin-bottom: 12px; display: flex; align-items: center; justify-content: center; 
+            color: #aaa; overflow: hidden;
+        }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .project-info h3 { margin: 0; font-family: var(--title-font); font-size: clamp(0.75rem, 3vw, 0.85rem); text-transform: uppercase; letter-spacing: 1px; color: var(--navy); }
+        .project-meta { font-size: 0.6rem; color: var(--accent-dim); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px;}
+
+        /* --- BOTONES NAVEGACIÓN --- */
+        .nav-buttons { position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 60px); display: flex; justify-content: space-between; align-items: center; pointer-events: none; z-index: 10; }
+        .nav-btn { pointer-events: auto; border: none; background: rgba(255, 255, 255, 0.8); color: var(--navy); width: 45px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.5rem; transition: 0.3s; }
+        .nav-btn:hover { background: rgba(255, 255, 255, 1); }
+
+        /* --- VISTA DETALLE --- */
+        #project-detail-view { display: none; opacity: 0; transition: opacity 0.4s ease; padding: 20px 0 60px 0; }
+        .btn-back { font-family: var(--title-font); font-size: 0.6rem; text-transform: uppercase; cursor: pointer; border: none; background: none; color: var(--accent-dim); margin-bottom: 30px; padding: 0; }
+
+        .detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: flex-start; }
+
+        /* --- GALERÍA --- */
+        .gallery-container { width: 100%; } 
+        .gallery-main { width: 100%; aspect-ratio: 16/10; background-color: #eee; border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; position: relative; cursor: pointer; }
+        .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-nav { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+        .gallery-nav-btn { pointer-events: auto; border: none; background: rgba(0, 0, 0, 0.3); color: white; width: 40px; height: 60px; cursor: pointer; font-size: 1.2rem; }
+
+        .gallery-thumbnails { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
+        .thumbnail { width: clamp(60px, 15vw, 80px); aspect-ratio: 16/10; border: 1px solid var(--border-color); cursor: pointer; opacity: 0.6; flex-shrink: 0; }
+        .thumbnail.active { opacity: 1; border-color: var(--navy); }
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- INFO DETALLE --- */
+        .detail-info h2 { font-family: var(--title-font); font-size: clamp(1.3rem, 5vw, 1.8rem); text-transform: uppercase; margin: 0 0 15px 0; letter-spacing: 2px; }
+        .detail-subtitle { font-size: 0.95rem; margin-bottom: 30px; line-height: 1.5; }
+        .specs-list { border-top: 1px solid var(--border-color); }
+        .spec-item { border-bottom: 1px solid var(--border-color); padding: 15px 0; display: grid; grid-template-columns: 160px 1fr; gap: 20px; align-items: center; }
+        .spec-label { font-family: var(--title-font); font-weight: 700; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
+        .spec-value { font-size: 0.85rem; color: #444; margin: 0; line-height: 1.4; }
+
+        /* --- LIGHTBOX --- */
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .lightbox.open { display: flex; }
+        .lightbox-content { max-width: 95%; max-height: 95%; object-fit: contain; border: 2px solid white; }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 1001; }
+
+        /* --- STATS SECTION --- */
+        .stats-section { 
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; 
+            padding: 60px 0; 
+            border-top: 1px solid var(--border-color); 
+        }
+
+        .about-text h2 { font-family: var(--title-font); font-size: clamp(1.5rem, 6vw, 2.2rem); letter-spacing: -1px; line-height: 1.2; margin: 0 0 20px 0; font-weight: 600; }
+        .about-text p { color: #555; font-size: 1rem; font-weight: 300; margin-bottom: 25px; }
+
+        .stat-item { border-bottom: 1px solid var(--border-color); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+        .stat-number { font-size: clamp(1.8rem, 6vw, 2.2rem); font-family: var(--title-font); font-weight: 700; }
+        .stat-label { font-family: var(--title-font); font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: #888; text-align: right; }
+
+        /* --- MEDIA QUERIES PARA RESPONSIVE --- */
+        @media (max-width: 1024px) { 
+            .detail-layout { grid-template-columns: 1fr; gap: 30px; } 
+        }
+        
+        @media (max-width: 768px) {
+            .header-nav { flex-direction: column; gap: 20px; padding: 20px 0; text-align: center; }
+            .logo-container { margin-bottom: 10px; }
+            nav { justify-content: center; gap: 20px; }
+            nav a { margin: 0; font-size: 0.7rem; }
+            .stats-section { grid-template-columns: 1fr; gap: 30px; padding: 40px 0; }
+            .slider-item { flex: 0 0 90%; }
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 40px 0 20px 0; }
+            .hero p { font-size: 0.95rem; }
+            .filters { justify-content: center; gap: 15px; }
+            .slider-item { flex: 0 0 95%; }
+            .nav-btn { width: 35px; height: 50px; font-size: 1.2rem; }
+            
+            /* Apila las especificaciones en móviles para que no se corten los textos */
+            .spec-item { grid-template-columns: 1fr; gap: 8px; padding: 12px 0; }
+            .spec-label { color: var(--navy); }
+            
+            .gallery-nav-btn { width: 30px; height: 40px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <header class="header-nav">
+            <a href="https://sites.google.com/tholosdesarrollos.com/inicio/inicio-tholos" class="logo-container">
+                <h1 class="logo-main">THOLOS</h1>
+                <div class="logo-line"></div>
+                <p class="logo-text">desarrollos inmobiliarios</p>
+            </a>
+            <nav>
+                <a href="#portfolio-slider-section">Portafolio</a>
+                <a href="https://sites.google.com/tholosdesarrollos.com/inicio/contacto-tholos" class="btn-contact">Contacto</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <span class="label">Desde 2004</span>
+            <h1>Espacios construidos<br>para <em>perdurar.</em></h1>
+            <p>Tholos evoca el punto de encuentro de la antigua Grecia, el centro donde la funcionalidad y la comunidad convergían. Trasladamos esa esencia a nuestra labor como desarrolladores, posicionándonos en el centro de cada proyecto para coordinar con precisión la arquitectura, la inversión y la ejecución.</p>
+        </section>
+
+        <section id="portfolio-slider-section">
+            <div class="filters">
+                <span class="filter-item">Condominios</span>
+                <span class="filter-item">Residencial</span>
+            </div>
+            <div style="position: relative;">
+                <div class="slider-wrapper" id="sliderWrapper">
+                    <div class="slider-item" onclick="openProject('one_condo')">
+                        <div class="img-box"><img src="https://lh3.googleusercontent.com/u/0/d/1M78eoTULSj5leZF8E9P8Sfeo0d87oUzk" alt="One Condo Houses"></div>
+                        <div class="project-info"><h3>One Condo Houses</h3><div class="project-meta">Pilar, Bs. As.</div></div>
+                    </div>
+                    <div class="slider-item" onclick="openProject('olazabal')">
+                        <div class="img-box"><img src="https://lh3.googleusercontent.com/d/1Miqvp7LOLj4C0-mmPJIfcy3BA0CWiAoO" alt="Proyecto Olazabal"></div>
+                        <div class="project-info"><h3>Proyecto Olazabal</h3><div class="project-meta">Ituzaingó, Bs. As.</div></div>
+                    </div>
+                    <div class="slider-item" onclick="openProject('roots')">
+                        <div class="img-box"><img src="https://lh3.googleusercontent.com/d/1l8xFSsgqgoekyuYOi79tKy5HwT9WnOoN" alt="Roots"></div>
+                        <div class="project-info"><h3>Roots</h3><div class="project-meta">Ituzaingó, Bs. As.</div></div>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="slideScroll(-400)">❮</button>
+                    <button class="nav-btn" onclick="slideScroll(400)">❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="project-detail-view">
+            <button class="btn-back" onclick="closeProject()">← Volver al portafolio</button>
+            <div class="detail-layout">
+                <div class="gallery-container">
+                    <div class="gallery-main" onclick="openLightbox()">
+                        <img id="main-photo" src="" alt="Imagen principal">
+                        <div class="gallery-nav">
+                            <button class="gallery-nav-btn" onclick="prevImage(event)">❮</button>
+                            <button class="gallery-nav-btn" onclick="nextImage(event)">❯</button>
+                        </div>
+                    </div>
+                    <div class="gallery-thumbnails" id="thumb-bar"></div>
+                </div>
+                <div class="detail-info">
+                    <h2 id="det-title"></h2>
+                    <p class="detail-subtitle" id="det-subtitle"></p>
+                    <div class="specs-list">
+                        <div class="spec-item"><div class="spec-label">Unidades</div><div class="spec-value" id="det-units"></div></div>
+                        <div class="spec-item"><div class="spec-label">Terminaciones</div><div class="spec-value" id="det-finishes"></div></div>
+                        <div class="spec-item"><div class="spec-label">Equipamiento</div><div class="spec-value" id="det-equip"></div></div>
+                        <div class="spec-item"><div class="spec-label">Superficie</div><div class="spec-value" id="det-surf"></div></div>
+                        <div class="spec-item"><div class="spec-label">Plazo de ejecución</div><div class="spec-value" id="det-period"></div></div>
+                        <div class="spec-item"><div class="spec-label">Estado</div><div class="spec-value" id="det-status" style="font-weight: bold; text-transform: uppercase;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="about-text">
+                <h2>Arquitectura como un compromiso.</h2>
+                <p>Para nosotros, desarrollar es crear equilibrio. Así como la cúpula de un tholos se sostiene por la perfección de su forma, nuestros desarrollos se sostienen gracias a una gestión integrada, eficiente y transparente. No construimos estructuras aisladas, desarrollamos centros de vida diseñados para la fluidez y la conexión humana.</p>
+            </div>
+            <div class="stats-list">
+                <div class="stat-item"><span class="stat-number">60+</span><span class="stat-label">Proyectos<br>Completados</span></div>
+                <div class="stat-item"><span class="stat-number">22</span><span class="stat-label">Años en<br>el sector</span></div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script>
+        const projectData = {
+            'one_condo': {
+                title: 'One Condo Houses',
+                subtitle: 'Complejo cerrado de Townhouses. Schubert 3962. Partido de Pilar.',
+                units: '12 viviendas independientes de 120 m²',
+                finishes: 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, porcelanatos símil madera, mesadas silestone y griferías monocomando',
+                equip: 'Caldera, losa radiante',
+                surf: 'Parcela de 2575 m² y 1340 m² cubiertos',
+                period: '22 meses',
+                status: 'Terminado',
+                images: [
+                    'https://lh3.googleusercontent.com/u/0/d/1M78eoTULSj5leZF8E9P8Sfeo0d87oUzk',
+                    'https://lh3.googleusercontent.com/u/0/d/1CrdizzL7gPYtP0i8Sb8hQYDSeDUu9rDs',
+                    'https://lh3.googleusercontent.com/u/0/d/1bzSsJhofeNsUSxoOA6JEz-HIpkC5mY5t',
+                    'https://lh3.googleusercontent.com/u/0/d/1DU4saVxwY4Zf9ydbUibGwqjCRQPYT4u-',
+                    'https://lh3.googleusercontent.com/u/0/d/1Su7y6reBWxKN0UOZq_0Q0d7chNiCiHQ4',
+                    'https://lh3.googleusercontent.com/u/0/d/1ulIDsHvvvtNB02LRnHCW_hLRyTrFrQNO',
+                    'https://lh3.googleusercontent.com/u/0/d/1BGE1Pf0Z_rF4bR1243l3YSiiThyjWPiO',
+                    'https://lh3.googleusercontent.com/u/0/d/1mbckxe9u_kM6vk9blqYigPH8SFvTbARE',
+                    'https://lh3.googleusercontent.com/u/0/d/1-OlMDHoQa2DeyswgpXWaFjM2txWi9Tik',
+                    'https://lh3.googleusercontent.com/u/0/d/1sFavTqdh6g2IQhqN-EZEnfFQTIt8Hj95',
+                    'https://lh3.googleusercontent.com/u/0/d/11VKOeI0h7929mSpU2vqy54uMvWe9TSqv',
+                    'https://lh3.googleusercontent.com/u/0/d/1b-8prbExljjg1GYnmpQ4I242dAkw7e6G',
+                    'https://lh3.googleusercontent.com/u/0/d/1XbwNH5flDhZZL-3g4G2bDxU8wJ9Rm9Ux',
+                    'https://lh3.googleusercontent.com/u/0/d/1RciZMskuNiFbn2JX7FwjL7PLMjq8DZmo',
+                    'https://lh3.googleusercontent.com/u/0/d/1tadSQdIDG3p-GymeuC5Tj0x__VHe1xyr'
+                ]
+            },
+            'olazabal': {
+                title: 'Proyecto Olazabal',
+                subtitle: 'Complejo de duplex. Olazabal 1492. Partido de Ituzaingó.',
+                units: '6 unidades independientes de 112 M²',
+                finishes: 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, mesadas silestone, y porcelanatos símil madera',
+                equip: 'Caldera, tanques de agua y bombas presurizadoras independientes',
+                surf: 'Parcela 625 m² y 670 m² cubiertos',
+                period: '12 meses',
+                status: 'Entregado',
+                images: [
+                    'https://lh3.googleusercontent.com/d/1Miqvp7LOLj4C0-mmPJIfcy3BA0CWiAoO',
+                    'https://lh3.googleusercontent.com/d/19iAbYEZx4-DDqCHwzXtr3oWS1obbT-S1',
+                    'https://lh3.googleusercontent.com/d/1yPkwEDJ8VOo5HHZc2fFX1TmdGERA7UUF',
+                    'https://lh3.googleusercontent.com/d/1j_nLEJPty_5Sjfeuz0paB7qCrReqejeO',
+                    'https://lh3.googleusercontent.com/d/1uqTSloicVPnOc0sAXC9tjxIOYK2tZn6h',
+                    'https://lh3.googleusercontent.com/d/18MA80ndWyqqZXSiyZIS3eHXXkTFo_zwu',
+                    'https://lh3.googleusercontent.com/d/1D-awn6-Bzwm1ch8G-v0QCs3uOsDajEbI',
+                    'https://lh3.googleusercontent.com/d/1WEkxI9UZs1csRLxcm0IMWAlM3eCJtHcb',
+                    'https://lh3.googleusercontent.com/d/1fTGktJSjlDQsVlc0wXfnqlWuWmVnNLGo',
+                    'https://lh3.googleusercontent.com/d/1RM1ITuPrClw3vLrqGHbswsz7AosBp2-c',
+                    'https://lh3.googleusercontent.com/d/1NX3hwph682Lf0oNUN-Vy3m9Wu8mnJb8J',
+                    'https://lh3.googleusercontent.com/d/1dFMImXXrXcBKGRVVY9BlvQx8ItNEU8o3'
+                ]
+            },
+            'roots': {
+                title: 'Roots',
+                subtitle: 'Condominio de departamentos y duplex. Gral Jose Rondeau 303. Proximo a estación de Ituzaingó.',
+                units: '8 departamentos de 55 M² y 2 duplex de 70 M²',
+                finishes: 'Aberturas DVH, frentes e interiores de placard, cielo raso en durlock, y porcelanatos símil madera',
+                equip: 'N/A', 
+                surf: 'Parcela de 650 m² y 550 m² cubiertos',
+                period: '11 meses',
+                status: 'Entregado',
+                images: [
+                    'https://lh3.googleusercontent.com/d/1l8xFSsgqgoekyuYOi79tKy5HwT9WnOoN',
+                    'https://lh3.googleusercontent.com/d/1wkTbmWbw8D9UoSMDYRLvp2yOrk0no6KX',
+                    'https://lh3.googleusercontent.com/d/1WL-Y20SnYs23JLc8tr_t8OiS6X4isBLy',
+                    'https://lh3.googleusercontent.com/d/14Nq1Z7Wm-xnN6LlbPfS-UE2YRxU7zFw8',
+                    'https://lh3.googleusercontent.com/d/1wSYRASeLQ8TNNtimxeMR1iYa-iknYX_E',
+                    'https://lh3.googleusercontent.com/d/1K-p7DRaTZC5HkXfUxbeNDihx-fxsfSu-',
+                    'https://lh3.googleusercontent.com/d/1ky-bzQwcHsesCh8zB3hgmmVvnsiUXsy1',
+                    'https://lh3.googleusercontent.com/d/1EUnnmBRTYAcFEGHpO63BIE9nRFCq4zn5'
+                ]
+            }
+        };
+
+        let currentImages = [];
+        let currentIndex = 0;
+
+        function slideScroll(dist) {
+            document.getElementById('sliderWrapper').scrollBy({ left: dist, behavior: 'smooth' });
+        }
+
+        function openProject(id) {
+            const data = projectData[id];
+            currentImages = data.images;
+            currentIndex = 0;
+
+            document.getElementById('det-title').innerText = data.title;
+            document.getElementById('det-subtitle').innerText = data.subtitle;
+            document.getElementById('det-units').innerText = data.units;
+            document.getElementById('det-finishes').innerText = data.finishes;
+            document.getElementById('det-equip').innerText = data.equip || 'N/A';
+            document.getElementById('det-surf').innerText = data.surf;
+            document.getElementById('det-period').innerText = data.period;
+            document.getElementById('det-status').innerText = data.status;
+
+            updateGallery();
+
+            document.getElementById('portfolio-slider-section').style.display = 'none';
+            const detail = document.getElementById('project-detail-view');
+            detail.style.display = 'block';
+            setTimeout(() => detail.style.opacity = '1', 50);
+            window.scrollTo(0,0);
+        }
+
+        function updateGallery() {
+            document.getElementById('main-photo').src = currentImages[currentIndex];
+            const bar = document.getElementById('thumb-bar');
+            bar.innerHTML = '';
+            currentImages.forEach((src, i) => {
+                const t = document.createElement('div');
+                t.className = 'thumbnail' + (i === currentIndex ? ' active' : '');
+                t.innerHTML = `<img src="${src}">`;
+                t.onclick = () => { currentIndex = i; updateGallery(); };
+                bar.appendChild(t);
+            });
+        }
+
+        function nextImage(e) { e.stopPropagation(); currentIndex = (currentIndex + 1) % currentImages.length; updateGallery(); }
+        function prevImage(e) { e.stopPropagation(); currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length; updateGallery(); }
+
+        function openLightbox() {
+            document.getElementById('lightbox-img').src = currentImages[currentIndex];
+            document.getElementById('lightbox').classList.add('open');
+        }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+        function closeLightboxOutside(e) { if(e.target.id === 'lightbox') closeLightbox(); }
+
+        function closeProject() {
+            const detail = document.getElementById('project-detail-view');
+            detail.style.opacity = '0';
+            setTimeout(() => {
+                detail.style.display = 'none';
+                document.getElementById('portfolio-slider-section').style.display = 'block';
+            }, 400);
+        }
+    </script>
+</body>
+</html>

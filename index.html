@@ -7,97 +7,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&family=Lexend+Exa:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f9f9f7; 
+            --bg-color: #f9f9f7; 
             --navy: #303F61; 
-            --text: #555555;
-            --border: #d1d1cf; 
+            --text-dim: #555555;
+            --border-color: #d1d1cf; 
             --title-font: 'Lexend Exa', sans-serif; 
             --body-font: 'Lexend Deca', sans-serif;
+            --accent-dim: #888;
         }
 
         *, *::before, *::after { box-sizing: border-box; }
 
         body { 
             margin: 0; padding: 0; 
-            background-color: var(--bg); color: var(--navy); 
+            background-color: var(--bg-color); color: var(--navy); 
             font-family: var(--body-font); 
             -webkit-font-smoothing: antialiased;
-            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .container { width: 95%; max-width: 1200px; margin: 0 auto; }
 
-        /* --- HEADER (Limpiado de enlaces externos) --- */
+        /* --- HEADER --- */
         .header-nav { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 30px 0; border-bottom: 1px solid var(--border); 
-            flex-wrap: wrap; gap: 20px;
+            padding: 25px 0 20px 0; border-bottom: 1px solid var(--border-color); 
+            flex-wrap: wrap;
         }
         
-        .logo { text-decoration: none; color: var(--navy); }
-        .logo h1 { font-family: var(--title-font); font-weight: 700; letter-spacing: 7px; font-size: 1.8rem; margin: 0; }
-        .logo div { width: 100%; height: 2px; background: var(--navy); margin: 5px 0; }
-        .logo p { font-family: var(--title-font); font-size: 0.6rem; letter-spacing: 3px; text-transform: lowercase; margin: 0; }
+        .logo-container { text-align: center; text-decoration: none; color: var(--navy); min-width: 200px; }
+        .logo-main { font-family: var(--title-font); font-weight: 700; letter-spacing: 7px; font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; line-height: 1; }
+        .logo-line { width: 100%; height: 2px; background-color: var(--navy); margin: 6px 0; }
+        .logo-text { font-family: var(--title-font); font-size: 0.6rem; letter-spacing: 3px; text-transform: lowercase; margin: 0; }
         
-        nav a { 
-            font-family: var(--title-font); color: var(--navy); text-decoration: none; 
-            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; margin-left: 20px;
-        }
-        nav a.btn-contact { border: 1.5px solid var(--navy); padding: 10px 20px; transition: 0.3s; }
-        nav a.btn-contact:hover { background: var(--navy); color: white; }
+        nav { display: flex; align-items: center; flex-wrap: wrap; gap: 15px; }
+        nav a { font-family: var(--title-font); color: var(--navy); text-decoration: none; font-size: 0.65rem; text-transform: uppercase; margin-left: 20px; letter-spacing: 1.5px; }
+        nav a.btn-contact { border: 1.5px solid var(--navy); padding: 8px 20px; transition: 0.3s; margin-left: 0; }
+        nav a.btn-contact:hover { background-color: var(--navy); color: white; }
 
         /* --- HERO --- */
-        .hero { padding: 80px 0 60px; }
-        .hero span { font-family: var(--title-font); text-transform: uppercase; font-size: 0.6rem; letter-spacing: 3px; color: #888; }
-        .hero h1 { font-family: var(--title-font); font-size: clamp(2rem, 6vw, 3rem); line-height: 1.1; margin: 15px 0; font-weight: 600; }
-        .hero p { max-width: 600px; font-size: 1.1rem; color: var(--text); font-weight: 300; }
+        .hero { padding: 60px 0 40px 0; }
+        .hero h1 { font-family: var(--title-font); font-size: clamp(1.8rem, 8vw, 2.8rem); line-height: 1.1; margin: 20px 0; font-weight: 600; }
+        .hero p { max-width: 580px; font-size: 1rem; color: var(--text-dim); font-weight: 300; }
 
-        /* --- PORTAFOLIO SLIDER --- */
-        .slider-wrapper { 
-            display: flex; gap: 20px; overflow-x: auto; 
-            scroll-snap-type: x mandatory; padding-bottom: 20px; 
-            scrollbar-width: none;
-        }
+        /* --- SLIDER --- */
+        .slider-wrapper { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; scrollbar-width: none; }
         .slider-wrapper::-webkit-scrollbar { display: none; }
-        .slider-item { flex: 0 0 85%; max-width: 500px; scroll-snap-align: start; cursor: pointer; }
-        .img-box { width: 100%; aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--border); margin-bottom: 15px; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .slider-item:hover img { transform: scale(1.05); }
+        .slider-item { flex: 0 0 80%; max-width: 600px; scroll-snap-align: start; cursor: pointer; transition: 0.3s; }
+        .img-box { width: 100%; aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 12px; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- VISTA DETALLE (Optimizada para Mobile) --- */
-        #project-detail { display: none; opacity: 0; transition: 0.4s; padding: 40px 0; }
-        .detail-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
+        /* --- DETALLE --- */
+        #project-detail-view { display: none; opacity: 0; transition: opacity 0.4s; padding: 20px 0 60px; }
+        .detail-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
+        .gallery-main { width: 100%; aspect-ratio: 16/10; max-height: 60vh; border: 1px solid var(--border-color); overflow: hidden; position: relative; }
+        .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
         
-        .main-img-container { width: 100%; aspect-ratio: 16/10; max-height: 60vh; overflow: hidden; border: 1px solid var(--border); position: relative; }
-        .main-img-container img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .thumbs { display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 10px; }
-        .thumb { width: 70px; aspect-ratio: 16/10; cursor: pointer; border: 1px solid var(--border); opacity: 0.5; flex-shrink: 0; }
-        .thumb.active { opacity: 1; border-color: var(--navy); }
-        .thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .specs-list { border-top: 1px solid var(--border-color); margin-top: 20px; }
+        .spec-item { border-bottom: 1px solid var(--border-color); padding: 15px 0; display: grid; grid-template-columns: 160px 1fr; gap: 20px; }
+        .spec-label { font-family: var(--title-font); font-weight: 700; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
+        .spec-value { font-size: 0.85rem; color: #444; line-height: 1.4; }
 
-        .specs { border-top: 1px solid var(--border); margin-top: 20px; }
-        .spec { border-bottom: 1px solid var(--border); padding: 15px 0; display: flex; justify-content: space-between; gap: 10px; }
-        .spec-label { font-family: var(--title-font); font-weight: 700; font-size: 0.6rem; text-transform: uppercase; color: var(--navy); }
-        .spec-val { font-size: 0.85rem; text-align: right; max-width: 60%; }
+        /* --- STATS --- */
+        .stats-section { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .stat-item { border-bottom: 1px solid var(--border-color); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+        .stat-number { font-size: 2.2rem; font-family: var(--title-font); font-weight: 700; }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 850px) {
-            .detail-grid { grid-template-columns: 1fr; }
-            .header-nav { justify-content: center; text-align: center; }
-            nav { width: 100%; justify-content: center; }
-            .spec { flex-direction: column; align-items: flex-start; }
-            .spec-val { text-align: left; max-width: 100%; }
+            .detail-layout, .stats-section { grid-template-columns: 1fr; }
+            .spec-item { grid-template-columns: 1fr; gap: 5px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header-nav">
-            <a href="index.html" class="logo">
-                <h1>THOLOS</h1>
-                <div></div>
-                <p>desarrollos inmobiliarios</p>
+            <a href="#" class="logo-container">
+                <h1 class="logo-main">THOLOS</h1>
+                <div class="logo-line"></div>
+                <p class="logo-text">desarrollos inmobiliarios</p>
             </a>
             <nav>
                 <a href="#portfolio-slider-section">Portafolio</a>
@@ -107,81 +95,92 @@
 
         <main id="main-content">
             <section class="hero">
-                <span>Desde 2004</span>
-                <h1>Espacios construidos para perdurar.</h1>
-                <p>Traducimos la esencia del encuentro griego a la precisión técnica y arquitectónica del presente.</p>
+                <span style="font-family:var(--title-font); font-size:0.6rem; letter-spacing:3px; color:#888;">Desde 2004</span>
+                <h1>Espacios construidos<br>para <em>perdurar.</em></h1>
+                <p>Tholos evoca el punto de encuentro de la antigua Grecia, el centro donde la funcionalidad y la comunidad convergían. Trasladamos esa esencia a nuestra labor como desarrolladores...</p>
             </section>
 
             <section id="portfolio-slider-section">
-                <div class="slider-wrapper" id="slider">
-                    </div>
+                <div class="slider-wrapper" id="slider"></div>
+            </section>
+
+            <section class="stats-section">
+                <div class="about-text">
+                    <h2>Arquitectura como un compromiso.</h2>
+                    <p>Nuestros desarrollos se sostienen gracias a una gestión integrada, eficiente y transparente.</p>
+                </div>
+                <div class="stats-list">
+                    <div class="stat-item"><span class="stat-number">60+</span><span class="stat-label">Proyectos Completados</span></div>
+                    <div class="stat-item"><span class="stat-number">22</span><span class="stat-label">Años en el sector</span></div>
+                </div>
             </section>
         </main>
 
-        <section id="project-detail">
-            <button onclick="closeProject()" style="background:none; border:none; color:#888; cursor:pointer; margin-bottom:20px;">← VOLVER</button>
-            <div class="detail-grid">
+        <section id="project-detail-view">
+            <button onclick="closeProject()" style="background:none; border:none; cursor:pointer; color:#888; font-size:0.7rem; margin-bottom:20px;">← VOLVER</button>
+            <div class="detail-layout">
                 <div>
-                    <div class="main-img-container"><img id="det-img" src=""></div>
-                    <div class="thumbs" id="det-thumbs"></div>
+                    <div class="gallery-main"><img id="det-img" src=""></div>
                 </div>
                 <div>
-                    <h2 id="det-title" style="font-family:var(--title-font); letter-spacing:2px; margin-top:0;"></h2>
-                    <p id="det-sub" style="color:var(--text); font-size:0.9rem; margin-bottom:30px;"></p>
-                    <div class="specs" id="det-specs"></div>
+                    <h2 id="det-title" style="font-family:var(--title-font); margin:0;"></h2>
+                    <p id="det-sub" style="font-size:0.9rem; margin:15px 0 30px;"></p>
+                    <div class="specs-list" id="det-specs"></div>
                 </div>
             </div>
         </section>
     </div>
 
     <script>
-        const projects = {
+        const projectData = {
             'one_condo': {
                 title: 'One Condo Houses',
-                sub: 'Complejo cerrado de Townhouses en Pilar.',
-                specs: { 'Unidades': '12 viviendas', 'Superficie': '2575 m²', 'Estado': 'TERMINADO' },
-                images: ['casa1.jpg', 'casa2.jpg'] // Cambia estos nombres por tus fotos reales subidas a GitHub
+                subtitle: 'Complejo cerrado de Townhouses en Pilar.',
+                specs: { 'Unidades': '12 viviendas', 'Terminaciones': 'Aberturas DVH, Silestone', 'Equipamiento': 'Caldera, losa radiante', 'Superficie': '2575 m²', 'Plazo': '22 meses', 'Estado': 'TERMINADO' },
+                images: ['images/one1.jpg']
             },
             'olazabal': {
                 title: 'Proyecto Olazabal',
-                sub: 'Duplex de diseño en Ituzaingó.',
-                specs: { 'Unidades': '6 unidades', 'Superficie': '625 m²', 'Estado': 'ENTREGADO' },
-                images: ['olazabal1.jpg', 'olazabal2.jpg']
+                subtitle: 'Complejo de duplex en Ituzaingó.',
+                specs: { 'Unidades': '6 unidades', 'Terminaciones': 'Porcelanatos símil madera', 'Equipamiento': 'Bombas presurizadoras', 'Superficie': '625 m²', 'Plazo': '12 meses', 'Estado': 'ENTREGADO' },
+                images: ['images/olazabal1.jpg']
+            },
+            'roots': {
+                title: 'Roots',
+                subtitle: 'Condominio próximo a estación de Ituzaingó.',
+                specs: { 'Unidades': '8 departamentos y 2 duplex', 'Terminaciones': 'Cielo raso en durlock', 'Equipamiento': 'N/A', 'Superficie': '650 m²', 'Plazo': '11 meses', 'Estado': 'ENTREGADO' },
+                images: ['images/roots1.jpg']
             }
         };
 
-        // Cargar Slider Inicial
         const slider = document.getElementById('slider');
-        Object.keys(projects).forEach(id => {
-            const p = projects[id];
+        Object.keys(projectData).forEach(id => {
+            const p = projectData[id];
             slider.innerHTML += `
                 <div class="slider-item" onclick="openProject('${id}')">
                     <div class="img-box"><img src="${p.images[0]}"></div>
-                    <h3 style="font-size:0.8rem; letter-spacing:1px; margin:0;">${p.title}</h3>
+                    <h3 style="font-family:var(--title-font); font-size:0.75rem;">${p.title}</h3>
                 </div>`;
         });
 
         function openProject(id) {
-            const p = projects[id];
+            const p = projectData[id];
             document.getElementById('det-title').innerText = p.title;
-            document.getElementById('det-sub').innerText = p.sub;
+            document.getElementById('det-sub').innerText = p.subtitle;
             document.getElementById('det-img').src = p.images[0];
-            
-            const specsDiv = document.getElementById('det-specs');
-            specsDiv.innerHTML = '';
+            const specs = document.getElementById('det-specs');
+            specs.innerHTML = '';
             for (let s in p.specs) {
-                specsDiv.innerHTML += `<div class="spec"><span class="spec-label">${s}</span><span class="spec-val">${p.specs[s]}</span></div>`;
+                specs.innerHTML += `<div class="spec-item"><span class="spec-label">${s}</span><span class="spec-val">${p.specs[s]}</span></div>`;
             }
-
             document.getElementById('main-content').style.display = 'none';
-            const det = document.getElementById('project-detail');
+            const det = document.getElementById('project-detail-view');
             det.style.display = 'block';
             setTimeout(() => det.style.opacity = '1', 50);
-            window.scrollTo(0,0);
         }
 
         function closeProject() {
-            document.getElementById('project-detail').style.display = 'none';
+            document.getElementById('project-detail-view').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
         }
     </script>

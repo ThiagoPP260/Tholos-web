@@ -187,52 +187,86 @@
         <img class="lightbox-content" id="lightbox-img">
     </div>
 
-    <script>
-        const projects = {
+     <script>
+        const projectData = {
             'one_condo': {
                 title: 'One Condo Houses',
-                sub: 'Complejo cerrado de Townhouses. Schubert 3962. Pilar.',
+                subtitle: 'Complejo cerrado de Townhouses. Schubert 3962. Partido de Pilar.',
                 specs: { 
                     'Unidades': '12 viviendas independientes de 120 m²', 
-                    'Terminaciones': 'Aberturas DVH, mampostería en yeso, porcelanatos símil madera, mesadas silestone', 
+                    'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, porcelanatos símil madera, mesadas silestone y griferías monocomando', 
                     'Equipamiento': 'Caldera, losa radiante', 
-                    'Superficie': '2575 m² parcela / 1340 m² cubiertos', 
+                    'Superficie': 'Parcela de 2575 m² y 1340 m² cubiertos', 
                     'Plazo': '22 meses', 
                     'Estado': 'TERMINADO' 
                 },
                 images: [
                     'images/Fotos pagina web/OCH/1.png',
-                    'images/Fotos pagina web/OCH/2.png',
-                    'images/Fotos pagina web/OCH/3.png',
-                    'images/Fotos pagina web/OCH/4.png'
+                    'images/Fotos pagina web/OCH/2.jpeg',
+                    'images/Fotos pagina web/OCH/3.jpeg',
+                    'images/Fotos pagina web/OCH/4.jpeg',
+                    'images/Fotos pagina web/OCH/5.png',
+                    'images/Fotos pagina web/OCH/5.1.png',
+                    'images/Fotos pagina web/OCH/6.png',
+                    'images/Fotos pagina web/OCH/7.png',
+                    'images/Fotos pagina web/OCH/8.jpeg',
+                    'images/Fotos pagina web/OCH/9.png',
+                    'images/Fotos pagina web/OCH/10.jpeg',
+                    'images/Fotos pagina web/OCH/11.jpeg',
+                    'images/Fotos pagina web/OCH/12.jpeg',
+                    'images/Fotos pagina web/OCH/13.jpeg',
+                    'images/Fotos pagina web/OCH/14.jpeg',
+                    'images/Fotos pagina web/OCH/15.jpeg',
+                    'images/Fotos pagina web/OCH/16.jpeg'
                 ]
             },
             'olazabal': {
                 title: 'Proyecto Olazabal',
-                sub: 'Complejo de duplex. Olazabal 1492. Ituzaingó.',
+                subtitle: 'Complejo de duplex. Olazabal 1492. Partido de Ituzaingó.',
                 specs: { 
-                    'Unidades': '6 unidades de 112 M²', 
-                    'Terminaciones': 'Aberturas DVH, mesadas silestone, porcelanatos símil madera', 
-                    'Equipamiento': 'Caldera, bombas presurizadoras independientes', 
-                    'Superficie': '625 m² parcela / 670 m² cubiertos', 
+                    'Unidades': '6 unidades independientes de 112 M²', 
+                    'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, mesadas silestone, y porcelanatos símil madera', 
+                    'Equipamiento': 'Caldera, tanques de agua y bombas presurizadoras independientes', 
+                    'Superficie': 'Parcela 625 m² y 670 m² cubiertos', 
                     'Plazo': '12 meses', 
                     'Estado': 'ENTREGADO' 
                 },
-                images: [
-                    'images/Fotos pagina web/Olazabal/Olazabal 1.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 2.jpeg'
+                images: ['images/Fotos pagina web/Olazabal/Olazabal 1.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 2.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 3.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 4.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 5.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 6.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 7.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 8.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 9.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 10.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 11.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 12.jpeg'
                 ]
             },
             'roots': {
                 title: 'Roots',
-                sub: 'Condominio de departamentos y duplex. Ituzaingó.',
+                subtitle: 'Condominio de departamentos y duplex. Gral Jose Rondeau 303. Proximo a estación de Ituzaingó.',
                 specs: { 
                     'Unidades': '8 departamentos de 55 M² y 2 duplex de 70 M²', 
-                    'Superficie': '650 m² parcela / 550 m² cubiertos', 
+                    'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, cielo raso en durlock, y porcelanatos símil madera', 
+                    'Equipamiento': 'N/A', 
+                    'Superficie': 'Parcela de 650 m² y 550 m² cubiertos', 
                     'Plazo': '11 meses', 
                     'Estado': 'ENTREGADO' 
                 },
-                images: ['images/Fotos pagina web/Roots/Roots portada.jpeg']
+                images: ['images/Fotos pagina web/Roots/Roots portada.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 2.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 3.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 4.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 5.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 6.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 7.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 8.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 9.jpeg'
+                ]
+
             }
         };
 

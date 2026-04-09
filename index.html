@@ -23,48 +23,16 @@
             font-family: var(--body-font); 
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* --- CONTENEDOR MAESTRO --- */
         .container { 
             width: 90%; 
             max-width: 1200px; 
             margin: 0 auto; 
             position: relative;
         }
-        /* Botones de navegación del carrusel principal */
-        .nav-buttons-main {
-            position: absolute;
-            top: 45%; /* Centrado vertical respecto a las imágenes */
-            left: -20px; /* Sobresalen un poco para no tapar la foto */
-            width: calc(100% + 40px);
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none; /* No bloquea los clics en las fotos */
-            z-index: 10;
-        }
 
-        .nav-btn-main {
-            pointer-events: auto;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--navy);
-            width: 45px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
-
-        .nav-btn-main:hover { background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-
-        /* En móvil las ocultamos para que no estorben, ya que se usa el dedo */
-        @media (max-width: 850px) {
-            .nav-buttons-main { display: none; }
-}
         /* --- HEADER --- */
         .header-nav { 
             display: flex; justify-content: space-between; align-items: center; 
@@ -86,10 +54,15 @@
         /* --- HERO --- */
         .hero { padding: 60px 0; }
         .hero span { font-family: var(--title-font); text-transform: uppercase; font-size: 0.6rem; letter-spacing: 3px; color: #888; }
-        .hero h1 { font-family: var(--title-font); font-size: clamp(2rem, 6vw, 3rem); line-height: 1.1; margin: 15px 0; font-weight: 600; }
+        .hero h1 { 
+            font-family: var(--title-font); 
+            font-size: clamp(2.5rem, 8vw, 3.8rem); 
+            line-height: 1.1; margin: 15px 0; font-weight: 600; 
+        }
         .hero p { max-width: 600px; font-size: 1.1rem; color: var(--text); font-weight: 300; }
 
-        /* --- CARRUSEL (Ajustado para 2 por fila) --- */
+        /* --- CARRUSEL PRINCIPAL --- */
+        #portfolio-slider-section { position: relative; margin-bottom: 40px; }
         .slider-wrapper { 
             display: flex; gap: 20px; overflow-x: auto; 
             scroll-snap-type: x mandatory; padding-bottom: 30px; 
@@ -101,54 +74,77 @@
         .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .slider-item:hover img { transform: scale(1.05); }
 
-        /* --- DETALLE (Fijado para no desbordar) --- */
+        .nav-buttons-main {
+            position: absolute; top: 40%; left: -25px; width: calc(100% + 50px);
+            display: flex; justify-content: space-between; pointer-events: none; z-index: 10;
+        }
+        .nav-btn-main {
+            pointer-events: auto; border: 1px solid var(--border); background: rgba(255, 255, 255, 0.9);
+            color: var(--navy); width: 45px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
+        }
+
+        /* --- VISTA DETALLE --- */
         #project-detail { display: none; opacity: 0; transition: 0.4s; padding: 40px 0; }
         .detail-grid { 
             display: grid; 
-            grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); /* FIX: minmax evita el desborde */
+            grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); 
             gap: 40px; 
             width: 100%;
+            align-items: start;
         }
         
-        .main-img-container { width: 100%; aspect-ratio: 16/10; max-height: 60vh; overflow: hidden; border: 1px solid var(--border); position: relative; cursor: pointer; }
+        .main-img-container { 
+            width: 100%; 
+            aspect-ratio: 16/10; 
+            max-height: 65vh; 
+            overflow: hidden; 
+            border: 1px solid var(--border); 
+            position: relative; 
+            cursor: pointer; 
+        }
         .main-img-container img { width: 100%; height: 100%; object-fit: cover; }
         
         .gallery-nav { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
         .gallery-nav-btn { pointer-events: auto; border: none; background: rgba(0, 0, 0, 0.4); color: white; width: 40px; height: 60px; cursor: pointer; font-size: 1.2rem; }
 
         .thumbs { display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .thumb { width: 70px; aspect-ratio: 16/10; cursor: pointer; border: 1px solid var(--border); opacity: 0.5; flex-shrink: 0; }
+        .thumb { width: 80px; aspect-ratio: 16/10; cursor: pointer; border: 1px solid var(--border); opacity: 0.5; flex-shrink: 0; transition: 0.3s; }
         .thumb.active { opacity: 1; border-color: var(--navy); }
         .thumb img { width: 100%; height: 100%; object-fit: cover; }
 
         .specs { border-top: 1px solid var(--border); margin-top: 20px; }
-        .spec { border-bottom: 1px solid var(--border); padding: 15px 0; display: flex; justify-content: space-between; gap: 15px; }
+        .spec { border-bottom: 1px solid var(--border); padding: 15px 0; display: flex; justify-content: space-between; gap: 20px; }
         .spec-label { font-family: var(--title-font); font-weight: 700; font-size: 0.6rem; text-transform: uppercase; color: var(--navy); min-width: 120px; }
-        .spec-val { font-size: 0.85rem; text-align: right; color: var(--text); }
+        .spec-val { font-size: 0.85rem; text-align: right; color: var(--text); flex: 1; }
 
-        /* --- STATS SECTION --- */
+        /* --- STATS --- */
         .stats-section { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 40px; padding: 60px 0; border-top: 1px solid var(--border); }
+        .about-text h2 { font-family: var(--title-font); font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 600; line-height: 1.2; margin: 0 0 20px 0; }
         .stat-item { border-bottom: 1px solid var(--border); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
         .stat-number { font-size: 2.2rem; font-family: var(--title-font); font-weight: 700; }
         .stat-label { font-family: var(--title-font); font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: #888; text-align: right; }
 
         /* --- LIGHTBOX --- */
-        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
         .lightbox.open { display: flex; }
         .lightbox-content { max-width: 95%; max-height: 95%; object-fit: contain; border: 2px solid white; }
         .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 1001; }
 
-        /* --- RESPONSIVE MOBILE (CRÍTICO) --- */
+        /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 850px) {
             .container { width: 92%; }
             .header-nav { flex-direction: column; text-align: center; }
             nav { justify-content: center; width: 100%; margin-top: 10px; }
             nav a { margin: 0 10px; }
             
-            .slider-item { flex: 0 0 85%; }
+            .slider-item { flex: 0 0 85%; min-width: auto; }
+            .nav-buttons-main { display: none; }
+            
+            /* Ocultamos las miniaturas en móvil como pediste */
+            .thumbs { display: none !important; }
             
             .detail-grid, .stats-section { grid-template-columns: 1fr; gap: 20px; }
-            .main-img-container { max-height: 40vh; }
+            .main-img-container { max-height: 45vh; }
             
             .spec { flex-direction: column; align-items: flex-start; gap: 5px; }
             .spec-val { text-align: left; }
@@ -172,12 +168,11 @@
         <main id="main-content">
             <section class="hero">
                 <span>Desde 2004</span>
-                <h2 style="font-family: var(--title-font); font-weight: 600;">Espacios construidos para <em>perdurar.</em></h1>
+                <h1>Espacios construidos para <em>perdurar.</em></h1>
                 <p>Tholos evoca el punto de encuentro de la antigua Grecia, el centro donde la funcionalidad y la comunidad convergían. Trasladamos esa esencia a nuestra labor como desarrolladores, posicionándonos en el centro de cada proyecto para coordinar con precisión la arquitectura, la inversión y la ejecución.</p>
             </section>
 
-            
-            <section id="portfolio-slider-section" style="position: relative;">
+            <section id="portfolio-slider-section">
                 <div class="nav-buttons-main">
                     <button class="nav-btn-main" onclick="slideScroll(-400)">❮</button>
                     <button class="nav-btn-main" onclick="slideScroll(400)">❯</button>
@@ -187,18 +182,18 @@
 
             <section class="stats-section">
                 <div class="about-text">
-                    <h2 style="font-family: var(--title-font); font-weight: 600;">Arquitectura como un compromiso</h2>
+                    <h2>Arquitectura como un compromiso</h2>
                     <p style="color: var(--text); font-weight: 300;">Para nosotros, desarrollar es crear equilibrio. Así como la cúpula de un tholos se sostiene por la perfección de su forma, nuestros desarrollos se sostienen gracias a una gestión integrada, eficiente y transparente.</p>
                 </div>
                 <div class="stats-list">
-                    <div class="stat-item"><span class="stat-number">60+</span><span class="stat-label">Proyectos<br>Completados</span></div>
+                    <div class="stat-item"><span class="stat-number">60+</span><span class="stat-label">Proyectos Completados</span></div>
                     <div class="stat-item"><span class="stat-number">22</span><span class="stat-label">Años en el sector</span></div>
                 </div>
             </section>
         </main>
 
         <section id="project-detail">
-            <button onclick="closeProject()" style="background:none; border:none; color:#888; cursor:pointer; margin-bottom:20px; font-family:var(--title-font); font-size:0.7rem;">← VOLVER</button>
+            <button onclick="closeProject()" style="background:none; border:none; color:#888; cursor:pointer; margin-bottom:20px; font-family:var(--title-font); font-size:0.7rem; padding:0;">← VOLVER</button>
             <div class="detail-grid">
                 <div>
                     <div class="main-img-container" onclick="openLightbox()">
@@ -211,7 +206,7 @@
                     <div class="thumbs" id="det-thumbs"></div>
                 </div>
                 <div>
-                    <h2 id="det-title" style="font-family:var(--title-font); letter-spacing:2px; margin-top:0; text-transform:uppercase;"></h2>
+                    <h2 id="det-title" style="font-family:var(--title-font); letter-spacing:2px; margin-top:0; text-transform:uppercase; font-size: clamp(1.4rem, 4vw, 1.8rem);"></h2>
                     <p id="det-sub" style="color:var(--text); font-size:0.9rem; margin-bottom:30px;"></p>
                     <div class="specs" id="det-specs"></div>
                 </div>
@@ -238,23 +233,12 @@
                     'Estado': 'TERMINADO' 
                 },
                 images: [
-                    'images/Fotos pagina web/OCH/1.png',
-                    'images/Fotos pagina web/OCH/2.jpeg',
-                    'images/Fotos pagina web/OCH/3.jpeg',
-                    'images/Fotos pagina web/OCH/4.jpeg',
-                    'images/Fotos pagina web/OCH/5.png',
-                    'images/Fotos pagina web/OCH/5.1.png',
-                    'images/Fotos pagina web/OCH/6.png',
-                    'images/Fotos pagina web/OCH/7.png',
-                    'images/Fotos pagina web/OCH/8.jpeg',
-                    'images/Fotos pagina web/OCH/9.png',
-                    'images/Fotos pagina web/OCH/10.jpeg',
-                    'images/Fotos pagina web/OCH/11.jpeg',
-                    'images/Fotos pagina web/OCH/12.jpeg',
-                    'images/Fotos pagina web/OCH/13.jpeg',
-                    'images/Fotos pagina web/OCH/14.jpeg',
-                    'images/Fotos pagina web/OCH/15.jpeg',
-                    'images/Fotos pagina web/OCH/16.jpeg'
+                    'images/Fotos pagina web/OCH/1.png', 'images/Fotos pagina web/OCH/2.jpeg', 'images/Fotos pagina web/OCH/3.jpeg',
+                    'images/Fotos pagina web/OCH/4.jpeg', 'images/Fotos pagina web/OCH/5.png', 'images/Fotos pagina web/OCH/5.1.png',
+                    'images/Fotos pagina web/OCH/6.png', 'images/Fotos pagina web/OCH/7.png', 'images/Fotos pagina web/OCH/8.jpeg',
+                    'images/Fotos pagina web/OCH/9.png', 'images/Fotos pagina web/OCH/10.jpeg', 'images/Fotos pagina web/OCH/11.jpeg',
+                    'images/Fotos pagina web/OCH/12.jpeg', 'images/Fotos pagina web/OCH/13.jpeg', 'images/Fotos pagina web/OCH/14.jpeg',
+                    'images/Fotos pagina web/OCH/15.jpeg', 'images/Fotos pagina web/OCH/16.jpeg'
                 ]
             },
             'olazabal': {
@@ -269,18 +253,12 @@
                     'Estado': 'ENTREGADO' 
                 },
                 images: [
-                    'images/Fotos pagina web/Olazabal/Olazabal 1.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 2.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 3.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 4.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 5.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 6.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 7.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 8.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 9.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 10.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 11.jpeg',
-                    'images/Fotos pagina web/Olazabal/Olazabal 12.jpeg'
+                    'images/Fotos pagina web/Olazabal/Olazabal 1.jpeg', 'images/Fotos pagina web/Olazabal/Olazabal 2.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 3.jpeg', 'images/Fotos pagina web/Olazabal/Olazabal 4.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 5.jpeg', 'images/Fotos pagina web/Olazabal/Olazabal 6.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 7.jpeg', 'images/Fotos pagina web/Olazabal/Olazabal 8.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 9.jpeg', 'images/Fotos pagina web/Olazabal/Olazabal 10.jpeg',
+                    'images/Fotos pagina web/Olazabal/Olazabal 11.jpeg', 'images/Fotos pagina web/Olazabal/Olazabal 12.jpeg'
                 ]
             },
             'roots': {
@@ -295,14 +273,10 @@
                     'Estado': 'ENTREGADO' 
                 },
                 images: [
-                    'images/Fotos pagina web/Roots/Roots portada.jpeg',
-                    'images/Fotos pagina web/Roots/Roots 2.jpeg',
-                    'images/Fotos pagina web/Roots/Roots 3.jpeg',
-                    'images/Fotos pagina web/Roots/Roots 4.jpeg',
-                    'images/Fotos pagina web/Roots/Roots 5.jpeg',
-                    'images/Fotos pagina web/Roots/Roots 6.jpeg',
-                    'images/Fotos pagina web/Roots/Roots 7.jpeg',
-                    'images/Fotos pagina web/Roots/Roots 8.jpeg',
+                    'images/Fotos pagina web/Roots/Roots portada.jpeg', 'images/Fotos pagina web/Roots/Roots 2.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 3.jpeg', 'images/Fotos pagina web/Roots/Roots 4.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 5.jpeg', 'images/Fotos pagina web/Roots/Roots 6.jpeg',
+                    'images/Fotos pagina web/Roots/Roots 7.jpeg', 'images/Fotos pagina web/Roots/Roots 8.jpeg',
                     'images/Fotos pagina web/Roots/Roots 9.jpeg'
                 ]
             }
@@ -310,36 +284,27 @@
 
         let currentImages = [];
         let currentIndex = 0;
-        
-        // CARGAR EL CARRUSEL
         const slider = document.getElementById('slider');
         Object.keys(projectData).forEach(id => {
             const p = projectData[id];
             slider.innerHTML += `
                 <div class="slider-item" onclick="openProject('${id}')">
-                    <div class="img-box"><img src="${p.images[0]}" onerror="this.src='https://via.placeholder.com/600x400?text=Foto'"></div>
-                    <h3 style="font-size:0.75rem; font-family:var(--title-font); margin:0; text-transform:uppercase;">${p.title}</h3>
+                    <div class="img-box"><img src="${p.images[0]}" alt="${p.title}"></div>
+                    <h3 style="font-size: clamp(1.2rem, 4vw, 1.4rem); font-family:var(--title-font); margin:0; text-transform:uppercase;">${p.title}</h3>
                 </div>`;
         });
 
-        function slideScroll(dist) {
-            document.getElementById('slider').scrollBy({ left: dist, behavior: 'smooth' });
-        }
+        function slideScroll(dist) { document.getElementById('slider').scrollBy({ left: dist, behavior: 'smooth' }); }
         
         function openProject(id) {
-            const p = projectData[id]; // CORREGIDO: antes decía 'projects'
+            const p = projectData[id];
             currentImages = p.images;
             currentIndex = 0;
-
             document.getElementById('det-title').innerText = p.title;
-            document.getElementById('det-sub').innerText = p.subtitle; // CORREGIDO: antes decía 'p.sub'
-            
+            document.getElementById('det-sub').innerText = p.subtitle;
             const specsDiv = document.getElementById('det-specs');
             specsDiv.innerHTML = '';
-            for (let s in p.specs) {
-                specsDiv.innerHTML += `<div class="spec"><span class="spec-label">${s}</span><span class="spec-val">${p.specs[s]}</span></div>`;
-            }
-
+            for (let s in p.specs) { specsDiv.innerHTML += `<div class="spec"><span class="spec-label">${s}</span><span class="spec-val">${p.specs[s]}</span></div>`; }
             updateGallery();
             document.getElementById('main-content').style.display = 'none';
             const det = document.getElementById('project-detail');
@@ -353,15 +318,7 @@
             const bar = document.getElementById('det-thumbs');
             const nav = document.getElementById('gallery-nav');
             bar.innerHTML = '';
-
-            if (currentImages.length <= 1) {
-                bar.style.display = 'none';
-                nav.style.display = 'none';
-                return;
-            }
-
-            bar.style.display = 'flex';
-            nav.style.display = 'flex';
+            // Las miniaturas solo se inyectan, el CSS se encarga de ocultarlas en móvil
             currentImages.forEach((src, i) => {
                 const t = document.createElement('div');
                 t.className = 'thumb' + (i === currentIndex ? ' active' : '');

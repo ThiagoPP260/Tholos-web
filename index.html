@@ -97,7 +97,7 @@
             <section class="hero">
                 <span style="font-family:var(--title-font); font-size:0.6rem; letter-spacing:3px; color:#888;">Desde 2004</span>
                 <h1>Espacios construidos<br>para <em>perdurar.</em></h1>
-                <p>Tholos evoca el punto de encuentro de la antigua Grecia, el centro donde la funcionalidad y la comunidad convergían. Trasladamos esa esencia a nuestra labor como desarrolladores...</p>
+                <p>Tholos evoca el punto de encuentro de la antigua Grecia, el centro donde la funcionalidad y la comunidad convergían. Trasladamos esa esencia a nuestra labor como desarrolladores, posicionándonos en el centro de cada proyecto para coordinar con precisión la arquitectura, la inversión y la ejecución.</p>
             </section>
 
             <section id="portfolio-slider-section">
@@ -106,15 +106,12 @@
 
             <section class="stats-section">
                 <div class="about-text">
-                    <h2>Arquitectura como un compromiso.</h2>
-                    <p>Nuestros desarrollos se sostienen gracias a una gestión integrada, eficiente y transparente.</p>
-                </div>
-                <div class="stats-list">
-                    <div class="stat-item"><span class="stat-number">60+</span><span class="stat-label">Proyectos Completados</span></div>
-                    <div class="stat-item"><span class="stat-number">22</span><span class="stat-label">Años en el sector</span></div>
+                    <h2 style="font-family: var(--title-font); font-weight: 600;">Arquitectura como un compromiso.</h2>
+                    <p style="color: var(--text-dim); font-weight: 300;">
+                        Para nosotros, desarrollar es crear equilibrio. Así como la cúpula de un tholos se sostiene por la perfección de su forma, nuestros desarrollos se sostienen gracias a una gestión integrada, eficiente y transparente.
+                     </p>
                 </div>
             </section>
-        </main>
 
         <section id="project-detail-view">
             <button onclick="closeProject()" style="background:none; border:none; cursor:pointer; color:#888; font-size:0.7rem; margin-bottom:20px;">← VOLVER</button>
@@ -135,20 +132,46 @@
         const projectData = {
             'one_condo': {
                 title: 'One Condo Houses',
-                subtitle: 'Complejo cerrado de Townhouses en Pilar.',
-                specs: { 'Unidades': '12 viviendas', 'Terminaciones': 'Aberturas DVH, Silestone', 'Equipamiento': 'Caldera, losa radiante', 'Superficie': '2575 m²', 'Plazo': '22 meses', 'Estado': 'TERMINADO' },
-                images: ['images/one1.jpg']
+                subtitle: 'Complejo cerrado de Townhouses. Schubert 3962. Partido de Pilar.',
+                specs: { 'Unidades': '12 viviendas independientes de 120 m²', 'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, porcelanatos símil madera, mesadas silestone y griferías monocomando', 'Equipamiento': 'Caldera, losa radiante', 
+                'Superficie': 'Parcela de 2575 m² y 1340 m² cubiertos', 'Plazo': '22 meses', 'Estado': 'TERMINADO' },
+                images: [
+                    'images/Fotos pagina web/OCH/1.png',
+                    'images/Fotos pagina web/OCH/2.png',
+                    'images/Fotos pagina web/OCH/3.png',
+                    'images/Fotos pagina web/OCH/4.png',
+                    'images/Fotos pagina web/OCH/5.png',
+                    'images/Fotos pagina web/OCH/5.1.png',
+                    'images/Fotos pagina web/OCH/6.png',
+                    'images/Fotos pagina web/OCH/7.png',
+                    'images/Fotos pagina web/OCH/8.png',
+                    'images/Fotos pagina web/OCH/9.png',
+                    'images/Fotos pagina web/OCH/10.png',
+                    'images/Fotos pagina web/OCH/11.png',
+                    'images/Fotos pagina web/OCH/12.png',
+                    'images/Fotos pagina web/OCH/13.png',
+                    'images/Fotos pagina web/OCH/14.png',
+                    'images/Fotos pagina web/OCH/15.png',
+                    'images/Fotos pagina web/OCH/16.png',
+        ]
             },
             'olazabal': {
                 title: 'Proyecto Olazabal',
-                subtitle: 'Complejo de duplex en Ituzaingó.',
-                specs: { 'Unidades': '6 unidades', 'Terminaciones': 'Porcelanatos símil madera', 'Equipamiento': 'Bombas presurizadoras', 'Superficie': '625 m²', 'Plazo': '12 meses', 'Estado': 'ENTREGADO' },
+                subtitle: 'Complejo de duplex. Olazabal 1492. Partido de Ituzaingó.',
+                specs: { 'Unidades': '6 unidades independientes de 112 M²', 'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, mampostería y cielo raso en yeso, mesadas silestone, y porcelanatos símil madera', 
+                'Equipamiento': 'Caldera, tanques de agua y bombas presurizadoras independientes', 'Superficie': 'Parcela 625 m² y 670 m² cubiertos', 
+                'Plazo': '12 meses', 'Estado': 'ENTREGADO' },
                 images: ['images/olazabal1.jpg']
             },
             'roots': {
                 title: 'Roots',
-                subtitle: 'Condominio próximo a estación de Ituzaingó.',
-                specs: { 'Unidades': '8 departamentos y 2 duplex', 'Terminaciones': 'Cielo raso en durlock', 'Equipamiento': 'N/A', 'Superficie': '650 m²', 'Plazo': '11 meses', 'Estado': 'ENTREGADO' },
+                subtitle: 'Condominio de departamentos y duplex. Gral Jose Rondeau 303. Proximo a estación de Ituzaingó.',
+                specs: { 'Unidades': '8 departamentos de 55 M² y 2 duplex de 70 M²', 
+                'Terminaciones': 'Aberturas DVH, frentes e interiores de placard, cielo raso en durlock, y porcelanatos símil madera', 
+                'Equipamiento': 'N/A', 
+                'Superficie': 'Parcela de 650 m² y 550 m² cubiertos', 
+                'Plazo': '11 meses', 
+                'Estado': 'ENTREGADO' },
                 images: ['images/roots1.jpg']
             }
         };

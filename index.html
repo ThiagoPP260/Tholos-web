@@ -54,25 +54,35 @@
         .slider-wrapper { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; scrollbar-width: none; }
         .slider-wrapper::-webkit-scrollbar { display: none; }
         .slider-item { flex: 0 0 80%; max-width: 600px; scroll-snap-align: start; cursor: pointer; transition: 0.3s; }
-        .img-box { width: 100%; aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 12px; }
+        .img-box { width: 100%; aspect-ratio: 16/10; background-color: #e2e2df; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 12px; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
         /* --- VISTA DETALLE Y GALERIA --- */
         #project-detail-view { display: none; opacity: 0; transition: opacity 0.4s; padding: 20px 0 60px; }
-        .detail-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; }
+        .detail-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: start; }
         
-        .gallery-container { width: 100%; }
-        .gallery-main { width: 100%; aspect-ratio: 16/10; max-height: 60vh; background-color: #eee; border: 1px solid var(--border-color); overflow: hidden; position: relative; cursor: pointer; }
+        .gallery-container { width: 100%; display: flex; flex-direction: column; }
+        .gallery-main { 
+            width: 100%; 
+            aspect-ratio: 16/10; 
+            max-height: 60vh; 
+            background-color: #e2e2df; 
+            border: 1px solid var(--border-color); 
+            position: relative; 
+            cursor: pointer; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
         .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Flechas de la foto principal */
         .gallery-nav { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
-        .gallery-nav-btn { pointer-events: auto; border: none; background: rgba(0, 0, 0, 0.3); color: white; width: 40px; height: 60px; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
-        .gallery-nav-btn:hover { background: rgba(0, 0, 0, 0.6); }
+        .gallery-nav-btn { pointer-events: auto; border: none; background: rgba(0, 0, 0, 0.4); color: white; width: 40px; height: 60px; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .gallery-nav-btn:hover { background: rgba(0, 0, 0, 0.8); }
 
-        /* Miniaturas */
-        .gallery-thumbnails { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; margin-top: 15px; padding-bottom: 5px; }
-        .thumbnail { width: clamp(60px, 15vw, 80px); aspect-ratio: 16/10; border: 1px solid var(--border-color); cursor: pointer; opacity: 0.5; flex-shrink: 0; transition: 0.3s; }
+        .gallery-thumbnails { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; margin-top: 15px; padding-bottom: 10px; }
+        .thumbnail { width: clamp(60px, 15vw, 80px); aspect-ratio: 16/10; border: 1px solid var(--border-color); background-color: #eee; cursor: pointer; opacity: 0.5; flex-shrink: 0; transition: 0.3s; }
         .thumbnail.active { opacity: 1; border-color: var(--navy); }
         .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
         
@@ -87,17 +97,25 @@
         .stat-number { font-size: 2.2rem; font-family: var(--title-font); font-weight: 700; }
 
         /* --- LIGHTBOX (PANTALLA COMPLETA) --- */
-        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
         .lightbox.open { display: flex; }
         .lightbox-content { max-width: 95%; max-height: 95%; object-fit: contain; border: 2px solid white; }
         .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 1001; }
 
-        /* --- CORRECCIONES MOBILE --- */
-        @media (max-width: 850px) {
-            .header-nav { flex-direction: column; gap: 15px; justify-content: center; }
-            nav { justify-content: center; width: 100%; gap: 20px; }
-            .detail-layout, .stats-section { grid-template-columns: 1fr; }
-            .spec-item { grid-template-columns: 1fr; gap: 5px; }
+        /* --- CORRECCIONES ESTRICTAS PARA MOBILE --- */
+        @media (max-width: 768px) {
+            .header-nav { flex-direction: column; gap: 15px; justify-content: center; text-align: center; }
+            .logo-container { margin: 0 auto; }
+            nav { justify-content: center; width: 100%; gap: 15px; }
+            
+            .detail-layout { grid-template-columns: 1fr; gap: 20px; }
+            .stats-section { grid-template-columns: 1fr; gap: 30px; }
+            
+            /* Esto previene que la imagen se vuelva gigante en celulares */
+            .gallery-main { max-height: 40vh; } 
+            
+            /* Apila las especificaciones para que el texto respire */
+            .spec-item { grid-template-columns: 1fr; gap: 5px; padding: 12px 0; }
         }
     </style>
 </head>
@@ -137,11 +155,11 @@
         </main>
 
         <section id="project-detail-view">
-            <button onclick="closeProject()" style="background:none; border:none; cursor:pointer; color:#888; font-size:0.7rem; margin-bottom:20px; padding:0; font-family: var(--title-font);">← VOLVER</button>
+            <button onclick="closeProject()" style="background:none; border:none; cursor:pointer; color:#888; font-size:0.7rem; margin-bottom:20px; padding:0; font-family: var(--title-font);">← VOLVER AL INICIO</button>
             <div class="detail-layout">
                 <div class="gallery-container">
                     <div class="gallery-main" onclick="openLightbox()">
-                        <img id="det-img" src="">
+                        <img id="det-img" src="" alt="Vista del proyecto">
                         <div class="gallery-nav" id="gallery-nav">
                             <button class="gallery-nav-btn" onclick="prevImage(event)">❮</button>
                             <button class="gallery-nav-btn" onclick="nextImage(event)">❯</button>
@@ -164,7 +182,7 @@
     </div>
 
     <script>
-
+        // Asegurados los 3 proyectos completos
         const projectData = {
             'one_condo': {
                 title: 'One Condo Houses',
@@ -177,7 +195,6 @@
                     'Plazo': '22 meses', 
                     'Estado': 'TERMINADO' 
                 },
-
                 images: [
                     'images/Fotos pagina web/OCH/1.png',
                     'images/Fotos pagina web/OCH/2.png',
@@ -197,11 +214,8 @@
                     'images/Fotos pagina web/OCH/15.png',
                     'images/Fotos pagina web/OCH/16.png'
                 ]
-
             },
-
             'olazabal': {
-
                 title: 'Proyecto Olazabal',
                 subtitle: 'Complejo de duplex. Olazabal 1492. Partido de Ituzaingó.',
                 specs: { 
@@ -212,8 +226,8 @@
                     'Plazo': '12 meses', 
                     'Estado': 'ENTREGADO' 
                 },
-
-                images: ['images/Fotos pagina web/Olazabal/Olazabal 1.jpeg',
+                images: [
+                    'images/Fotos pagina web/Olazabal/Olazabal 1.jpeg',
                     'images/Fotos pagina web/Olazabal/Olazabal 2.jpeg',
                     'images/Fotos pagina web/Olazabal/Olazabal 3.jpeg',
                     'images/Fotos pagina web/Olazabal/Olazabal 4.jpeg',
@@ -227,7 +241,6 @@
                     'images/Fotos pagina web/Olazabal/Olazabal 12.jpeg'
                 ]
             },
-
             'roots': {
                 title: 'Roots',
                 subtitle: 'Condominio de departamentos y duplex. Gral Jose Rondeau 303. Proximo a estación de Ituzaingó.',
@@ -246,14 +259,16 @@
         let currentImages = [];
         let currentIndex = 0;
 
-        // INICIALIZAR EL CARRUSEL PRINCIPAL
+        // Limpiamos y armamos el carrusel principal
         const slider = document.getElementById('slider');
+        slider.innerHTML = ''; 
+        
         Object.keys(projectData).forEach(id => {
             const p = projectData[id];
             slider.innerHTML += `
                 <div class="slider-item" onclick="openProject('${id}')">
-                    <div class="img-box"><img src="${p.images[0]}" onerror="this.src='https://via.placeholder.com/600x400?text=Cargando+Imagen'"></div>
-                    <h3 style="font-family:var(--title-font); font-size:0.75rem;">${p.title}</h3>
+                    <div class="img-box"><img src="${p.images[0]}" alt="${p.title}"></div>
+                    <h3 style="font-family:var(--title-font); font-size:0.75rem; color: var(--navy); margin:0;">${p.title}</h3>
                 </div>`;
         });
 
@@ -281,30 +296,28 @@
             window.scrollTo(0,0);
         }
 
-        // FUNCIÓN QUE ARMA LAS MINIATURAS Y ACTUALIZA LA FOTO
         function updateGallery() {
             document.getElementById('det-img').src = currentImages[currentIndex];
             const bar = document.getElementById('thumb-bar');
             const nav = document.getElementById('gallery-nav');
             bar.innerHTML = '';
 
-            // Ocultar flechas y miniaturas si el proyecto solo tiene 1 foto
             if (currentImages.length <= 1) {
                 bar.style.display = 'none';
                 nav.style.display = 'none';
                 return;
             }
 
-            // Si hay más de 1 foto, mostrar flechas y miniaturas
             bar.style.display = 'flex';
             nav.style.display = 'flex';
 
             currentImages.forEach((src, i) => {
                 const t = document.createElement('div');
                 t.className = 'thumbnail' + (i === currentIndex ? ' active' : '');
-                t.innerHTML = `<img src="${src}" onerror="this.src='https://via.placeholder.com/150?text=Error'">`;
+                // Se removió el placeholder de error forzado para evitar flashes visuales si la ruta local falla
+                t.innerHTML = `<img src="${src}" alt="miniatura">`;
                 t.onclick = (e) => { 
-                    e.stopPropagation(); // Evita que se abra el lightbox al clickear la miniatura
+                    e.stopPropagation(); 
                     currentIndex = i; 
                     updateGallery(); 
                 };
@@ -312,7 +325,6 @@
             });
         }
 
-        // FUNCIONES DE LAS FLECHAS
         function nextImage(e) {
             if(e) e.stopPropagation();
             if(currentImages.length > 0) {
@@ -329,10 +341,11 @@
             }
         }
 
-        // FUNCIONES DEL LIGHTBOX (PANTALLA COMPLETA)
         function openLightbox() {
-            document.getElementById('lightbox-img').src = currentImages[currentIndex];
-            document.getElementById('lightbox').classList.add('open');
+            if(currentImages.length > 0) {
+                document.getElementById('lightbox-img').src = currentImages[currentIndex];
+                document.getElementById('lightbox').classList.add('open');
+            }
         }
 
         function closeLightbox() {
@@ -343,7 +356,6 @@
             if(e.target.id === 'lightbox') closeLightbox();
         }
 
-        // CERRAR EL PROYECTO Y VOLVER AL INICIO
         function closeProject() {
             const det = document.getElementById('project-detail-view');
             det.style.opacity = '0';

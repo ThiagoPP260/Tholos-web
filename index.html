@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tholos | Desarrollos Inmobiliarios</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&family=Lexend+Exa:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="images/Logo barra etiqueta.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca..." rel="stylesheet">
     <style>
         :root {
             --bg: #f9f9f7; 
@@ -39,10 +42,50 @@
             padding: 30px 0; border-bottom: 1px solid var(--border); 
             flex-wrap: wrap; gap: 20px;
         }
-        .logo { text-decoration: none; color: var(--navy); cursor: pointer; }
-        .logo h1 { font-family: var(--title-font); font-weight: 700; letter-spacing: 7px; font-size: 1.8rem; margin: 0; }
-        .logo div { width: 100%; height: 2px; background: var(--navy); margin: 5px 0; }
-        .logo p { font-family: var(--title-font); font-size: 0.6rem; letter-spacing: 3px; text-transform: lowercase; margin: 0; }
+
+        /* Ajuste para el Logo con Imagen */
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            text-decoration: none; 
+            color: var(--navy); 
+            cursor: pointer; 
+        }
+        
+        .logo-img {
+            height: 55px; /* Ajuste de altura del logo */
+            width: auto;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 { 
+            font-family: var(--title-font); 
+            font-weight: 700; 
+            letter-spacing: 7px; 
+            font-size: 1.8rem; 
+            margin: 0; 
+            line-height: 1;
+        }
+
+        .logo .line { 
+            width: 100%; 
+            height: 2px; 
+            background: var(--navy); 
+            margin: 5px 0; 
+        }
+
+        .logo p { 
+            font-family: var(--title-font); 
+            font-size: 0.6rem; 
+            letter-spacing: 3px; 
+            text-transform: lowercase; 
+            margin: 0; 
+        }
         
         nav a { 
             font-family: var(--title-font); color: var(--navy); text-decoration: none; 
@@ -56,7 +99,7 @@
         .hero span { font-family: var(--title-font); text-transform: uppercase; font-size: 0.6rem; letter-spacing: 3px; color: #888; }
         .hero h1 { 
             font-family: var(--title-font); 
-            font-size: clamp(2.5rem, 8vw, 3.8rem); 
+            font-size: clamp(2.2rem, 7vw, 3.3rem); 
             line-height: 1.1; margin: 15px 0; font-weight: 600; 
         }
         .hero p { max-width: 600px; font-size: 1.1rem; color: var(--text); font-weight: 300; }
@@ -85,28 +128,11 @@
 
         /* --- VISTA DETALLE --- */
         #project-detail { display: none; opacity: 0; transition: 0.4s; padding: 40px 0; }
-        .detail-grid { 
-            display: grid; 
-            grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); 
-            gap: 40px; 
-            width: 100%;
-            align-items: start;
-        }
-        
-        .main-img-container { 
-            width: 100%; 
-            aspect-ratio: 16/10; 
-            max-height: 65vh; 
-            overflow: hidden; 
-            border: 1px solid var(--border); 
-            position: relative; 
-            cursor: pointer; 
-        }
+        .detail-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 40px; width: 100%; align-items: start; }
+        .main-img-container { width: 100%; aspect-ratio: 16/10; max-height: 65vh; overflow: hidden; border: 1px solid var(--border); position: relative; cursor: pointer; }
         .main-img-container img { width: 100%; height: 100%; object-fit: cover; }
-        
         .gallery-nav { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
         .gallery-nav-btn { pointer-events: auto; border: none; background: rgba(0, 0, 0, 0.4); color: white; width: 40px; height: 60px; cursor: pointer; font-size: 1.2rem; }
-
         .thumbs { display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .thumb { width: 80px; aspect-ratio: 16/10; cursor: pointer; border: 1px solid var(--border); opacity: 0.5; flex-shrink: 0; transition: 0.3s; }
         .thumb.active { opacity: 1; border-color: var(--navy); }
@@ -119,33 +145,31 @@
 
         /* --- STATS --- */
         .stats-section { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 40px; padding: 60px 0; border-top: 1px solid var(--border); }
-        .about-text h2 { font-family: var(--title-font); font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 600; line-height: 1.2; margin: 0 0 20px 0; }
+        .about-text h2 { 
+            font-family: var(--title-font); 
+            font-size: clamp(1.7rem, 4.5vw, 2.1rem); 
+            font-weight: 600; line-height: 1.2; margin: 0 0 20px 0; 
+        }
         .stat-item { border-bottom: 1px solid var(--border); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
         .stat-number { font-size: 2.2rem; font-family: var(--title-font); font-weight: 700; }
         .stat-label { font-family: var(--title-font); font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: #888; text-align: right; }
 
-        /* --- LIGHTBOX --- */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
         .lightbox.open { display: flex; }
         .lightbox-content { max-width: 95%; max-height: 95%; object-fit: contain; border: 2px solid white; }
         .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 1001; }
 
-        /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 850px) {
             .container { width: 92%; }
             .header-nav { flex-direction: column; text-align: center; }
+            .logo { flex-direction: column; gap: 10px; }
             nav { justify-content: center; width: 100%; margin-top: 10px; }
             nav a { margin: 0 10px; }
-            
             .slider-item { flex: 0 0 85%; min-width: auto; }
             .nav-buttons-main { display: none; }
-            
-            /* Ocultamos las miniaturas en móvil como pediste */
             .thumbs { display: none !important; }
-            
             .detail-grid, .stats-section { grid-template-columns: 1fr; gap: 20px; }
             .main-img-container { max-height: 45vh; }
-            
             .spec { flex-direction: column; align-items: flex-start; gap: 5px; }
             .spec-val { text-align: left; }
         }
@@ -155,13 +179,16 @@
     <div class="container">
         <header class="header-nav">
             <a href="#" onclick="closeProject(); return false;" class="logo">
-                <h1>THOLOS</h1>
-                <div></div>
-                <p>desarrollos inmobiliarios</p>
+                <img src="images/Logo 2.png" alt="Tholos Logo" class="logo-img">
+                <div class="logo-text">
+                    <h1>THOLOS</h1>
+                    <div class="line"></div>
+                    <p>desarrollos inmobiliarios</p>
+                </div>
             </a>
             <nav>
                 <a onclick="closeProject(); return false;">Portafolio</a>
-                <a href="mailto:info@tholos.com.ar" class="btn-contact">Contacto</a>
+                <a href="mailto:tholosdesarrollos@gmail.com" class="btn-contact">Contacto</a>
             </nav>
         </header>
 
@@ -223,6 +250,7 @@
         const projectData = {
             'one_condo': {
                 title: 'One Condo Houses',
+                ubicacion: 'Pilar, Buenos Aires',
                 subtitle: 'Complejo cerrado de Townhouses. Schubert 3962. Partido de Pilar.',
                 specs: { 
                     'Unidades': '12 viviendas independientes de 120 m²', 
@@ -243,6 +271,7 @@
             },
             'olazabal': {
                 title: 'Proyecto Olazabal',
+                ubicacion: 'Ituzaingó, Buenos Aires',
                 subtitle: 'Complejo de duplex. Olazabal 1492. Partido de Ituzaingó.',
                 specs: { 
                     'Unidades': '6 unidades independientes de 112 M²', 
@@ -263,6 +292,7 @@
             },
             'roots': {
                 title: 'Roots',
+                ubicacion: 'Ituzaingó, Buenos Aires',
                 subtitle: 'Condominio de departamentos y duplex. Gral Jose Rondeau 303. Proximo a estación de Ituzaingó.',
                 specs: { 
                     'Unidades': '8 departamentos de 55 M² y 2 duplex de 70 M²', 
@@ -285,12 +315,15 @@
         let currentImages = [];
         let currentIndex = 0;
         const slider = document.getElementById('slider');
+
+        // Renderizado del Slider
         Object.keys(projectData).forEach(id => {
             const p = projectData[id];
             slider.innerHTML += `
                 <div class="slider-item" onclick="openProject('${id}')">
                     <div class="img-box"><img src="${p.images[0]}" alt="${p.title}"></div>
-                    <h3 style="font-size: clamp(1.2rem, 4vw, 1.4rem); font-family:var(--title-font); margin:0; text-transform:uppercase;">${p.title}</h3>
+                    <h3 style="font-size: clamp(0.9rem, 2.5vw, 1.1rem); font-family:var(--title-font); margin:0; text-transform:uppercase;">${p.title}</h3>
+                    <p style="color: #888; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; font-family: var(--title-font);">${p.ubicacion}</p>
                 </div>`;
         });
 
@@ -316,9 +349,7 @@
         function updateGallery() {
             document.getElementById('det-img').src = currentImages[currentIndex];
             const bar = document.getElementById('det-thumbs');
-            const nav = document.getElementById('gallery-nav');
             bar.innerHTML = '';
-            // Las miniaturas solo se inyectan, el CSS se encarga de ocultarlas en móvil
             currentImages.forEach((src, i) => {
                 const t = document.createElement('div');
                 t.className = 'thumb' + (i === currentIndex ? ' active' : '');
